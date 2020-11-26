@@ -9,7 +9,7 @@ class PerguntasController {
       return res.json(await getRepository(Pergunta).find());
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ erro: e.message, erroCode: e.code });
+      return res.status(400).json({ erro: e.message});
     }
   }
 
@@ -22,10 +22,11 @@ class PerguntasController {
       return res.json(resposta);
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ erro: e.message, erroCode: e.code });
+      return res.status(400).json({ erro: e.message});
     }
   }
 
+  // TODO : verificar se id do usuario coresponde a um usuario logado
   public async insert(req: Request, res: Response) {
     try {
       const perguntaRepository = getRepository(Pergunta);
@@ -40,7 +41,7 @@ class PerguntasController {
       return res.status(201).json(pergunta);
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ erro: e.message, erroCode: e.code });
+      return res.status(400).json({ erro: e.message});
     }
   }
 

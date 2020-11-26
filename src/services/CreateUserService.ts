@@ -1,6 +1,7 @@
 import User from "../models/User";
 import { getRepository } from "typeorm";
 import { hash } from "bcryptjs";
+import AppError from '../errors/AppError';
 
 
 interface Request {
@@ -14,7 +15,7 @@ class CreateUserService {
     const usersRepository = getRepository(User);
 
     if(!name || name.length == 0){
-      throw new Error("User must contain name.");
+      throw new AppError("User must contain name.");
     }
 
     //não criar um usuario com email duplicado
@@ -22,11 +23,11 @@ class CreateUserService {
       where: { email },
     });
     if (checkUserExists) {
-      throw new Error("Email address already used.");
+      throw new AppError("Email address already used.");
     }
 
     if(password.length < 6){
-      throw new Error("Weak password.");
+      throw new AppError("Weak password.");
     }
 
     const hashedPassword = await hash(password, 8);
