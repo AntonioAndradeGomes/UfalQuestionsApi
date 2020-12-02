@@ -1,0 +1,3 @@
+criar uma migration: yarn typeorm migration:create -n NOME_DA_MIGRATION
+executar uma migration: yarn typeorm migration:run
+reverter uma migration: yarn typeorm migration:revert

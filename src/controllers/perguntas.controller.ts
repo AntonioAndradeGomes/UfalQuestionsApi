@@ -59,7 +59,8 @@ class PerguntasController {
         return res.json({ message: "Pergunta removida com sucesso!" });
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
+      console.log('Executou');
       return res.status(400).json({ erro: e.message });
     }
   }

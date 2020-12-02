@@ -10,18 +10,19 @@ const upload = multer(uploadConfig);
 
 usersRouter.post("/", async (request, response) => {
   try {
-    const { name, email, password } = request.body;
+    console.log(request.body);
+    const { nome, email, password } = request.body;
     const createUser = new CreateUserService();
 
     const user = await createUser.execute({
-      name,
+      nome,
       email,
       password,
     });
 
     const userRetorno = {
       id: user.id,
-      name: user.name,
+      name: user.nome,
       email: user.email,
       created_at: user.created_at,
       updated_at: user.updated_at,
@@ -48,7 +49,7 @@ usersRouter.patch(
 
       const userRetorno = {
         id: user.id,
-        name: user.name,
+        name: user.nome,
         email: user.email,
         created_at: user.created_at,
         updated_at: user.updated_at,
@@ -57,7 +58,8 @@ usersRouter.patch(
 
       return response.json(userRetorno);
     } catch (err) {
-      return response.status(err.statusCode).json({ erro: err.message });
+
+      return response.status(401).json({ erro: err.message });
     }
   }
 );

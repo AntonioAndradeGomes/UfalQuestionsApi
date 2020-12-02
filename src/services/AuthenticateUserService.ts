@@ -11,6 +11,7 @@ interface UserRetorno{
   name: string;
   created_at : Date;
   updated_at : Date;
+  avatar : string;
 }
 
 interface Request {
@@ -49,10 +50,11 @@ class AuthenticateUserService {
 
     const userRetorno = {
       id: user.id,
-      name: user.name,
+      name: user.nome,
       email: user.email,
       created_at: user.created_at,
       updated_at: user.updated_at,
+      avatar: user.avatar
     };
 
 
