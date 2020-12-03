@@ -33,14 +33,14 @@ export class CreateUsers1604111693585 implements MigrationInterface {
           },
           {
             name: "password",
-            type: "varchar"
-          }
+            type: "varchar",
+          },
         ],
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable("users");
   }
 }

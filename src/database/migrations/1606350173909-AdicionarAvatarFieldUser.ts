@@ -6,14 +6,14 @@ export class AdicionarAvatarFieldUser1606350173909
     await queryRunner.addColumn(
       "users",
       new TableColumn({
-        name: 'avatar',
-        type: 'varchar',
+        name: "avatar",
+        type: "varchar",
         isNullable: true,
-      }),
+      })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropColumn('users', 'avatar');
+    await queryRunner.dropColumn("users", "avatar");
   }
 }

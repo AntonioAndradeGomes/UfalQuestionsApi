@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
+import Curso from "./Curso";
 
 @Entity("users")
 class User {
@@ -22,6 +25,15 @@ class User {
 
   @Column()
   avatar: string;
+
+  @Column()
+  curso_id: string;
+
+  @ManyToOne(() => Curso)
+  @JoinColumn({name: 'curso_id'})
+  curso: Curso;
+
+  //TODO: iniciar o cadastro do usuario com o campo de curso
 
   @CreateDateColumn()
   created_at: Date;

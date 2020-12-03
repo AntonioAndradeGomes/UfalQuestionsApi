@@ -9,8 +9,8 @@ const usersRouter = Router();
 const upload = multer(uploadConfig);
 
 usersRouter.post("/", async (request, response) => {
-  try {
-    console.log(request.body);
+
+    //console.log(request.body);
     const { nome, email, password } = request.body;
     const createUser = new CreateUserService();
 
@@ -29,9 +29,7 @@ usersRouter.post("/", async (request, response) => {
     };
 
     return response.json(userRetorno);
-  } catch (err) {
-    return response.status(err.statusCode).json({ error: err.message });
-  }
+
 });
 
 usersRouter.patch(
@@ -39,28 +37,23 @@ usersRouter.patch(
   ensureAuthenticated,
   upload.single("avatar"),
   async (request, response) => {
-    try {
-      const updateUserAvatar = new UpdateUserAvatarService();
+    const updateUserAvatar = new UpdateUserAvatarService();
 
-      const user = await updateUserAvatar.execute({
-        user_id: request.user.id,
-        avatarFilename: request.file.filename,
-      });
+    const user = await updateUserAvatar.execute({
+      user_id: request.user.id,
+      avatarFilename: request.file.filename,
+    });
 
-      const userRetorno = {
-        id: user.id,
-        name: user.nome,
-        email: user.email,
-        created_at: user.created_at,
-        updated_at: user.updated_at,
-        avatar: user.avatar,
-      };
+    const userRetorno = {
+      id: user.id,
+      name: user.nome,
+      email: user.email,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+      avatar: user.avatar,
+    };
 
-      return response.json(userRetorno);
-    } catch (err) {
-
-      return response.status(401).json({ erro: err.message });
-    }
+    return response.json(userRetorno);
   }
 );
 
