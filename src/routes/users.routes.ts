@@ -11,13 +11,14 @@ const upload = multer(uploadConfig);
 usersRouter.post("/", async (request, response) => {
 
     //console.log(request.body);
-    const { nome, email, password } = request.body;
+    const { nome, email, password, cursoId } = request.body;
     const createUser = new CreateUserService();
 
     const user = await createUser.execute({
       nome,
       email,
       password,
+      cursoId
     });
 
     const userRetorno = {
@@ -26,6 +27,7 @@ usersRouter.post("/", async (request, response) => {
       email: user.email,
       created_at: user.created_at,
       updated_at: user.updated_at,
+      curso: user.curso
     };
 
     return response.json(userRetorno);
@@ -51,6 +53,7 @@ usersRouter.patch(
       created_at: user.created_at,
       updated_at: user.updated_at,
       avatar: user.avatar,
+      curso: user.curso
     };
 
     return response.json(userRetorno);

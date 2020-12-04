@@ -2,9 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import User from "./User";
 
 @Entity("cursos")
 class Curso {
@@ -22,6 +26,9 @@ class Curso {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(type => User, curso => Curso)
+  users: User[];
 }
 
 export default Curso;

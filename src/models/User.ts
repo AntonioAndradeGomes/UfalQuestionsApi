@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  JoinTable,
 } from "typeorm";
 import Curso from "./Curso";
 
@@ -29,7 +30,7 @@ class User {
   @Column()
   curso_id: string;
 
-  @ManyToOne(() => Curso)
+  @ManyToOne(type => Curso, users => User)
   @JoinColumn({name: 'curso_id'})
   curso: Curso;
 
