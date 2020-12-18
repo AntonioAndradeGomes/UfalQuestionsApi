@@ -1,21 +1,33 @@
 import { Router } from "express";
-import { getRepository } from "typeorm";
-import Pergunta from "../models/Pergunta";
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import PerguntasController from '../controllers/perguntas.controller';
+import PerguntaService from "../services/PerguntaService";
 
 const perguntasRouter = Router();
 
 const perguntasController = new PerguntasController()
 
-perguntasRouter.get("/", perguntasController.readAll);
+perguntasRouter.get("/", perguntasController.readAll)
 
-perguntasRouter.get("/:id", perguntasController.readOnly);
+.post('/', ensureAuthenticated, async (request, response) => {
+  const {titulo, descricao} = request.body;
 
-perguntasRouter.post("/", ensureAuthenticated, perguntasController.insert);
+  const createPergunta = new PerguntaService();
 
+  const pergunta = await createPergunta.executeCreate({
+    titulo,
+    descricao,
+    userId : request.user.id
+  });
+
+  return response.status(201).json(pergunta);
+
+});
+
+
+/*
 perguntasRouter.delete("/:id", ensureAuthenticated, perguntasController.delete);
 
-perguntasRouter.put("/:id", ensureAuthenticated, perguntasController.update);
+perguntasRouter.put("/:id", ensureAuthenticated, perguntasController.update);*/
 
 export default perguntasRouter;

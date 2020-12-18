@@ -7,8 +7,10 @@ import {
   ManyToOne,
   JoinColumn,
   JoinTable,
+  OneToMany,
 } from "typeorm";
 import Curso from "./Curso";
+import Pergunta from "./Pergunta";
 
 @Entity("users")
 class User {
@@ -24,17 +26,18 @@ class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({nullable: true})
   avatar: string;
 
-  @Column()
-  curso_id: string;
-
-  @ManyToOne(type => Curso, users => User)
-  @JoinColumn({name: 'curso_id'})
+  @ManyToOne(type => Curso, users => User, {eager: true, onDelete: "SET NULL", onUpdate: "CASCADE", nullable: true})
   curso: Curso;
 
-  //TODO: iniciar o cadastro do usuario com o campo de curso
+  /*@Column()
+  cursoId: string;*/
+
+  @OneToMany(type => Pergunta, user => User)
+  perguntas: Pergunta[];
+
 
   @CreateDateColumn()
   created_at: Date;

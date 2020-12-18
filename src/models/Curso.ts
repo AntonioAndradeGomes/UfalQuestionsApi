@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import User from "./User";
+import Campus from "./Campus";
 
 @Entity("cursos")
 class Curso {
@@ -29,6 +30,9 @@ class Curso {
 
   @OneToMany(type => User, curso => Curso)
   users: User[];
+
+  @ManyToOne(type => Campus, cursos => Curso, {eager: true, onDelete: "CASCADE",onUpdate: "CASCADE", nullable: false})
+  campus: Campus;
 }
 
 export default Curso;

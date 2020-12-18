@@ -27,10 +27,11 @@ usersRouter.post("/", async (request, response) => {
       email: user.email,
       created_at: user.created_at,
       updated_at: user.updated_at,
-      curso: user.curso
+      curso: user.curso,
+      //cursoId: user.cursoId
     };
 
-    return response.json(userRetorno);
+    return response.status(201).json(userRetorno);
 
 });
 
@@ -53,6 +54,7 @@ usersRouter.patch(
       created_at: user.created_at,
       updated_at: user.updated_at,
       avatar: user.avatar,
+      //cursoId: user.cursoId,
       curso: user.curso
     };
 

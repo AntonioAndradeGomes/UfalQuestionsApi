@@ -5,7 +5,14 @@ import Pergunta from "../models/Pergunta";
 
 class PerguntasController {
   public async readAll(req: Request, res: Response) {
-    return res.json(await getRepository(Pergunta).find());
+    return res.json(await getRepository(Pergunta).find(
+      {
+        relations: ['user'],
+        order: {
+          updated_at : 'DESC'
+        }
+      }
+    ));
   }
 
   public async readOnly(req: Request, res: Response) {
@@ -16,20 +23,8 @@ class PerguntasController {
     return res.json(resposta);
   }
 
-  // TODO : verificar se id do usuario coresponde a um usuario logado
-  public async insert(req: Request, res: Response) {
-    const perguntaRepository = getRepository(Pergunta);
-    const { titulo, descricao } = req.body;
-    //console.log(req.user);
-    const pergunta = perguntaRepository.create({
-      titulo,
-      descricao,
-      user_id: req.user.id,
-    });
-    await perguntaRepository.save(pergunta);
-    return res.status(201).json(pergunta);
-  }
 
+/*
   public async delete(req: Request, res: Response) {
     const perguntaRepository = getRepository(Pergunta);
     let perguntaRemover = await perguntaRepository.findOne({
@@ -62,7 +57,7 @@ class PerguntasController {
         })
       );
     }
-  }
+  }*/
 }
 
 export default PerguntasController;

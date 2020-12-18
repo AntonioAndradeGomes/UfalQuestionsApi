@@ -13,7 +13,8 @@ interface UserRetorno {
   created_at: Date;
   updated_at: Date;
   avatar: string;
-  curso_id: string;
+  curso: Curso;
+  //cursoId: string;
 }
 
 interface Request {
@@ -55,7 +56,8 @@ class AuthenticateUserService {
       created_at: user.created_at,
       updated_at: user.updated_at,
       avatar: user.avatar,
-      curso_id: user.curso_id,
+      curso: user.curso,
+      //cursoId: user.cursoId
     };
 
     return {

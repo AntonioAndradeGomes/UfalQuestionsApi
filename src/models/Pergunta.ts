@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn,
 } from "typeorm";
 import User from "./User";
 
@@ -14,20 +13,15 @@ class Pergunta {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({type: "text"})
   titulo: string;
-
-  @Column()
-  user_id: string;
 
   //partindo desse model para o model de usuario
   //quantos usuarios fizeram essa pergunta? um
-
-  @ManyToOne(() => User)
-  @JoinColumn({name: 'user_id'})
+  @ManyToOne(type => User, perguntas => Pergunta, {onDelete: "CASCADE", onUpdate: "CASCADE",  nullable: false})
   user: User;
 
-  @Column()
+  @Column({type: "text"})
   descricao: string;
 
   @CreateDateColumn()

@@ -12,6 +12,8 @@ interface Request {
   cursoId: string;
 }
 
+
+
 class CreateUserService {
   public async execute({ nome, email, password, cursoId }: Request): Promise<User> {
     const usersRepository = getRepository(User);
