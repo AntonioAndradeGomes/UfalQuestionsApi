@@ -22,7 +22,10 @@ perguntasRouter.get("/", perguntasController.readAll)
 
   return response.status(201).json(pergunta);
 
-});
+})
+
+.delete('/:id', ensureAuthenticated, perguntasController.delete)
+.put('/:id', ensureAuthenticated, perguntasController.update);
 
 
 /*

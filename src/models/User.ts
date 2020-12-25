@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import Curso from "./Curso";
 import Pergunta from "./Pergunta";
+import Resposta from "./Resposta";
 
 @Entity("users")
 class User {
@@ -32,12 +33,11 @@ class User {
   @ManyToOne(type => Curso, users => User, {eager: true, onDelete: "SET NULL", onUpdate: "CASCADE", nullable: true})
   curso: Curso;
 
-  /*@Column()
-  cursoId: string;*/
-
   @OneToMany(type => Pergunta, user => User)
   perguntas: Pergunta[];
 
+  @OneToMany(type => Resposta, user => User)
+  respostas: Resposta[];
 
   @CreateDateColumn()
   created_at: Date;

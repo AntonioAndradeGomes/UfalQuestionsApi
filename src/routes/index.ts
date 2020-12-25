@@ -5,6 +5,7 @@ import usersRouter from "./users.routes";
 import sessionsRouter from "./sessions.routes";
 import cursosRouter from './cursos.routes';
 import campusRouter from "./campus.routes";
+import respostasRouter from './respostas.routes';
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.use("/users", usersRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/cursos', cursosRouter);
 routes.use('/campus', campusRouter);
+routes.use('/respostas', respostasRouter);
 
 export default routes;
