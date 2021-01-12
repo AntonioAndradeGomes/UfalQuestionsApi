@@ -23,7 +23,6 @@ export default class CreateCursoService{
       throw new AppError("Past campus does not exist.");
     }
 
-
     const checkCursoExists = await cursoRepository.findOne(
       {
         where: {codigo}

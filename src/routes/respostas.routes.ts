@@ -1,7 +1,10 @@
 import {Router} from 'express';
+import RespostasController from '../controllers/respostas.controller';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import RespostaService from '../services/RespostaService';
 const respostasRouter = Router();
+
+const respostasController = new RespostasController();
 
 respostasRouter.post('/', ensureAuthenticated, async (request, response) => {
   const {textoResposta, perguntaId} = request.body;
@@ -22,6 +25,7 @@ respostasRouter.post('/', ensureAuthenticated, async (request, response) => {
   }
 
   return response.status(201).json(respostaRetorno);
-});
+})
+.get('/:idPergunta', respostasController.readonly);
 
 export default respostasRouter;

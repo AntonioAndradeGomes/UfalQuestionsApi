@@ -6,24 +6,13 @@ import authConfig from "../config/auth";
 import AppError from "../errors/AppError";
 import Curso from "../models/Curso";
 
-interface UserRetorno {
-  id: string;
-  email: string;
-  name: string;
-  created_at: Date;
-  updated_at: Date;
-  avatar: string;
-  curso: Curso;
-  //cursoId: string;
-}
-
 interface Request {
   email: string;
   password: string;
 }
 
 interface Response {
-  user: UserRetorno;
+  user: User | undefined;
   token: string;
 }
 
@@ -31,7 +20,21 @@ class AuthenticateUserService {
   public async execute({ email, password }: Request): Promise<Response> {
     const usersRepository = getRepository(User);
 
-    const user = await usersRepository.findOne({ where: { email } });
+    //coloquei no model o dado de senha como oculto, por isso necessitei dessa busca
+    //não consegui trazer o curso junto por isso refiz a busca la em baixo para trazer o curso junto
+    const user = await usersRepository.createQueryBuilder('user').select([
+      'user.id',
+      'user.nome',
+      'user.email',
+      'user.avatar',
+      'user.password',
+      'user.curso',
+      'user.created_at',
+      'user.updated_at'
+    ]).where('user.email = :email', {email: email} ).getOne();
+
+    //console.log(user);
+
     if (!user) {
       throw new AppError("Incorrect email/password combination.", 401);
     }
@@ -49,19 +52,10 @@ class AuthenticateUserService {
       expiresIn,
     });
 
-    const userRetorno = {
-      id: user.id,
-      name: user.nome,
-      email: user.email,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
-      avatar: user.avatar,
-      curso: user.curso,
-      //cursoId: user.cursoId
-    };
 
+    const userBuscado = await usersRepository.findOne({ where: { email } });
     return {
-      user: userRetorno,
+      user:  userBuscado,
       token,
     };
   }

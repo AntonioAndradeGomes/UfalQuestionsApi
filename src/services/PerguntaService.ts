@@ -16,6 +16,7 @@ export default class PerguntaService{
 
     const userLogado = await userRepository.findOne({
       where: {id: userId}
+
     });
 
     if(!userLogado){
@@ -35,6 +36,9 @@ export default class PerguntaService{
       descricao,
       user: userLogado
     });
+
+    //ignorar pois funciona
+    //delete pergunta.user.password;
 
     await perguntaRepository.save(pergunta);
 

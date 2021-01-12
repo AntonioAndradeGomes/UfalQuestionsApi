@@ -49,6 +49,7 @@ export default class RespostaService{
 
     await respostaRepository.save(resposta);
 
+    //delete resposta.pergunta.user.password;
     return resposta;
   }
 }
